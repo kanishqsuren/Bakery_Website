@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Bakery Admin &mdash; SweetCrumbs</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- ---------------------------------------------------------- login --- -->
+  <div class="login-screen" id="loginScreen" hidden>
+    <form class="login-card" id="loginForm" novalidate>
+      <h1>SweetCrumbs Admin</h1>
+      <p class="login-sub">Sign in to manage the bakery website.</p>
+
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" autocomplete="username" autofocus>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="current-password">
+      </div>
+
+      <button type="submit" id="loginBtn">Sign In</button>
+      <p class="form-error" id="loginError" role="alert"></p>
+    </form>
+  </div>
+
+  <!-- ------------------------------------------------------------ app --- -->
+  <div class="app" id="app" hidden>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <strong>SweetCrumbs Admin</strong>
+        </div>
+
+        <nav class="tabs" id="tabs">
+          <button type="button" class="tab" data-tab="dashboard">Dashboard</button>
+          <button type="button" class="tab" data-tab="products">Products</button>
+          <button type="button" class="tab" data-tab="orders">
+            Orders <span class="badge" id="ordersBadge" hidden></span>
+          </button>
+          <button type="button" class="tab" data-tab="messages">
+            Messages <span class="badge" id="messagesBadge" hidden></span>
+          </button>
+          <button type="button" class="tab" data-tab="content">Content</button>
+          <button type="button" class="tab" data-tab="settings">Settings</button>
+        </nav>
+
+        <div class="topbar-right">
+          <a class="view-site" href="/" target="_blank" rel="noopener">View site &#8599;</a>
+          <span class="who" id="whoami"></span>
+          <button type="button" class="ghost" id="logoutBtn">Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <!-- Dashboard -->
+      <section class="panel-section" data-panel="dashboard" hidden>
+        <h2>Dashboard</h2>
+        <div class="stat-grid" id="statGrid"></div>
+
+        <h3 class="sub">Latest orders</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>#</th><th>Customer</th><th>Item</th><th class="num">Qty</th><th class="num">Total</th><th>Status</th><th>Placed</th></tr>
+            </thead>
+            <tbody id="recentOrders"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Products -->
+      <section class="panel-section" data-panel="products" hidden>
+        <div class="section-head">
+          <h2>Products</h2>
+          <button type="button" id="newProductBtn">Add Product</button>
+        </div>
+        <p class="hint">
+          These rows drive both the Menu section and the order dropdown on the public site.
+          Hiding a product removes it from the site but keeps it here.
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th class="shrink">Order</th><th></th><th>Name</th>
+                <th class="num">Price</th><th>Description</th><th>Status</th><th class="actions-col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Orders -->
+      <section class="panel-section" data-panel="orders" hidden>
+        <div class="section-head">
+          <h2>Orders</h2>
+          <div class="filters" id="orderFilters">
+            <button type="button" class="chip is-active" data-status="">All</button>
+            <button type="button" class="chip" data-status="new">New</button>
+            <button type="button" class="chip" data-status="preparing">Preparing</button>
+            <button type="button" class="chip" data-status="collected">Collected</button>
+            <button type="button" class="chip" data-status="cancelled">Cancelled</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>#</th><th>Customer</th><th>Item</th><th class="num">Qty</th><th class="num">Total</th><th>Status</th><th>Placed</th><th class="actions-col">Actions</th></tr>
+            </thead>
+            <tbody id="orderRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Messages -->
+      <section class="panel-section" data-panel="messages" hidden>
+        <h2>Messages</h2>
+        <div class="message-list" id="messageList"></div>
+      </section>
+
+      <!-- Content -->
+      <section class="panel-section" data-panel="content" hidden>
+        <div class="section-head">
+          <h2>Site Content</h2>
+          <button type="button" id="saveContentBtn">Save Changes</button>
+        </div>
+        <p class="hint">Every heading, paragraph and contact detail on the public site. Changes show up on the next page load.</p>
+        <form id="contentForm" class="content-form"></form>
+      </section>
+
+      <!-- Settings -->
+      <section class="panel-section" data-panel="settings" hidden>
+        <h2>Settings</h2>
+        <form class="card narrow" id="passwordForm" novalidate>
+          <h3>Change password</h3>
+          <div class="field">
+            <label for="currentPassword">Current password</label>
+            <input type="password" id="currentPassword" autocomplete="current-password">
+            <p class="field-error" id="currentPasswordError" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="newPassword">New password</label>
+            <input type="password" id="newPassword" autocomplete="new-password">
+            <p class="field-error" id="newPasswordError" role="alert"></p>
+          </div>
+          <button type="submit">Update Password</button>
+          <p class="ok-message" id="passwordOk" hidden>Password updated.</p>
+        </form>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- -------------------------------------------------- product dialog --- -->
+  <div class="modal" id="productModal" hidden>
+    <div class="modal-backdrop" data-close="1"></div>
+    <form class="modal-card" id="productForm" novalidate>
+      <h3 id="productModalTitle">Add Product</h3>
+
+      <div class="field">
+        <label for="pName">Name</label>
+        <input type="text" id="pName" maxlength="80">
+        <p class="field-error" id="pNameError" role="alert"></p>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="pPrice">Price (&#8377;)</label>
+          <input type="number" id="pPrice" min="0" step="1">
+          <p class="field-error" id="pPriceError" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="pEmoji">Emoji</label>
+          <input type="text" id="pEmoji" maxlength="8" placeholder="&#127856;">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="pDescription">Description</label>
+        <textarea id="pDescription" rows="3" maxlength="500"></textarea>
+      </div>
+
+      <label class="checkbox">
+        <input type="checkbox" id="pActive" checked>
+        <span>Show this product on the website</span>
+      </label>
+
+      <p class="form-error" id="productFormError" role="alert"></p>
+
+      <div class="modal-actions">
+        <button type="button" class="ghost" data-close="1">Cancel</button>
+        <button type="submit" id="productSaveBtn">Save</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- -------------------------------------------------- confirm dialog --- -->
+  <div class="modal" id="confirmModal" hidden>
+    <div class="modal-backdrop" data-close="1"></div>
+    <div class="modal-card narrow-card">
+      <h3 id="confirmTitle">Are you sure?</h3>
+      <p id="confirmText"></p>
+      <div class="modal-actions">
+        <button type="button" class="ghost" data-close="1">Cancel</button>
+        <button type="button" class="danger" id="confirmOkBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden role="status"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

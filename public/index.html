@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SweetCrumbs Bakery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="container header-inner">
+      <h1 data-content="site_title">SweetCrumbs Bakery</h1>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#menu">View Menu</a>
+        <a href="#order">Order</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home">
+      <div class="hero-content">
+        <h2 data-content="hero_heading">Freshly Baked, Made with Love</h2>
+        <p data-content="hero_text">
+          At SweetCrumbs Bakery, we bake small batches of bread, cakes, and pastries
+          every morning using simple ingredients and a lot of care.
+        </p>
+        <button id="exploreBtn" data-content="hero_button">Explore Our Bakery</button>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="about-card">
+          <h2 data-content="about_heading">About Us</h2>
+          <p data-content="about_text">
+            SweetCrumbs Bakery is a small neighbourhood bakery run by a family of bakers.
+            We started with one oven and one recipe, and we still believe the best baking
+            is slow, honest, and shared with friends.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu">
+      <div class="container">
+        <div class="menu-head">
+          <h2 data-content="menu_heading">Our Freshly Baked Favourites</h2>
+          <p data-content="menu_text">
+            Baked fresh every morning in small batches. Here are the treats our
+            neighbours keep coming back for.
+          </p>
+        </div>
+
+        <!-- Rendered from the database at runtime. The six cards below are the
+             original hand-written markup and stay visible if the API is down. -->
+        <div class="menu-grid" id="menuGrid">
+          <article class="menu-card">
+            <div class="menu-card-art" aria-hidden="true"><span>&#127856;</span></div>
+            <div class="menu-card-body">
+              <div class="menu-card-top">
+                <h3>Chocolate Cake</h3>
+                <span class="price">&#8377;450</span>
+              </div>
+              <p>Three layers of dark cocoa sponge with a silky chocolate ganache.</p>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-art" aria-hidden="true"><span>&#129360;</span></div>
+            <div class="menu-card-body">
+              <div class="menu-card-top">
+                <h3>Butter Croissant</h3>
+                <span class="price">&#8377;90</span>
+              </div>
+              <p>Folded by hand over two days for a flaky, buttery crumb.</p>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-art" aria-hidden="true"><span>&#129472;</span></div>
+            <div class="menu-card-body">
+              <div class="menu-card-top">
+                <h3>Blueberry Muffin</h3>
+                <span class="price">&#8377;120</span>
+              </div>
+              <p>Soft vanilla muffin packed with juicy blueberries and a sugar crust.</p>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-art" aria-hidden="true"><span>&#127850;</span></div>
+            <div class="menu-card-body">
+              <div class="menu-card-top">
+                <h3>Chocolate Chip Cookies</h3>
+                <span class="price">&#8377;150</span>
+              </div>
+              <p>Crisp at the edges, chewy in the middle, full of chocolate chunks.</p>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-art" aria-hidden="true"><span>&#129473;</span></div>
+            <div class="menu-card-body">
+              <div class="menu-card-top">
+                <h3>Strawberry Cupcake</h3>
+                <span class="price">&#8377;100</span>
+              </div>
+              <p>Light sponge topped with fresh strawberry buttercream swirls.</p>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-art" aria-hidden="true"><span>&#127838;</span></div>
+            <div class="menu-card-body">
+              <div class="menu-card-top">
+                <h3>Sourdough Bread</h3>
+                <span class="price">&#8377;180</span>
+              </div>
+              <p>Slow-fermented naturally leavened loaf with a deep, crackly crust.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="order">
+      <div class="container">
+        <div class="menu-head">
+          <h2 data-content="order_heading">Order Your Favourites</h2>
+          <p data-content="order_text">
+            Pick a treat, tell us how many, and we&rsquo;ll show you the total straight away.
+            We will have it boxed and waiting at the counter.
+          </p>
+        </div>
+
+        <div class="order-layout">
+          <form id="orderForm" class="panel order-form" novalidate>
+            <div class="field">
+              <label for="customerName">Your name</label>
+              <input type="text" id="customerName" name="customerName"
+                     placeholder="e.g. Priya Raman" autocomplete="name">
+              <p class="field-error" id="customerNameError" role="alert"></p>
+            </div>
+
+            <div class="field">
+              <label for="product">Choose a product</label>
+              <select id="product" name="product">
+                <option value="Chocolate Cake" data-price="450">Chocolate Cake &mdash; &#8377;450</option>
+                <option value="Butter Croissant" data-price="90">Butter Croissant &mdash; &#8377;90</option>
+                <option value="Blueberry Muffin" data-price="120">Blueberry Muffin &mdash; &#8377;120</option>
+                <option value="Chocolate Chip Cookies" data-price="150">Chocolate Chip Cookies &mdash; &#8377;150</option>
+                <option value="Strawberry Cupcake" data-price="100">Strawberry Cupcake &mdash; &#8377;100</option>
+                <option value="Sourdough Bread" data-price="180">Sourdough Bread &mdash; &#8377;180</option>
+              </select>
+              <p class="field-error" id="productError" role="alert"></p>
+            </div>
+
+            <div class="field">
+              <label for="quantity">Quantity</label>
+              <input type="number" id="quantity" name="quantity"
+                     min="1" step="1" value="1" inputmode="numeric">
+              <p class="field-error" id="quantityError" role="alert"></p>
+            </div>
+
+            <div class="total-row">
+              <span class="total-label">Total</span>
+              <strong class="total-value" id="orderTotal">&#8377;450</strong>
+            </div>
+
+            <button type="submit" id="placeOrderBtn">Place Order</button>
+            <p class="field-error form-error" id="orderFormError" role="alert"></p>
+          </form>
+
+          <div class="order-summary-wrap" aria-live="polite">
+            <div class="panel order-summary" id="orderSummary" hidden>
+              <h3>Order Summary</h3>
+              <p class="confirm-message" id="summaryMessage"></p>
+              <dl class="summary-list">
+                <div class="summary-row">
+                  <dt>Order no.</dt>
+                  <dd id="summaryReference"></dd>
+                </div>
+                <div class="summary-row">
+                  <dt>Name</dt>
+                  <dd id="summaryName"></dd>
+                </div>
+                <div class="summary-row">
+                  <dt>Product</dt>
+                  <dd id="summaryProduct"></dd>
+                </div>
+                <div class="summary-row">
+                  <dt>Quantity</dt>
+                  <dd id="summaryQuantity"></dd>
+                </div>
+                <div class="summary-row summary-row-total">
+                  <dt>Total</dt>
+                  <dd id="summaryTotal"></dd>
+                </div>
+              </dl>
+              <p class="form-note" data-content="order_note">
+                No payment is taken online &mdash; you pay when you collect your order at the shop.
+              </p>
+            </div>
+
+            <p class="order-hint" id="orderHint">
+              Your order summary will appear here once you place an order.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="menu-head">
+          <h2 data-content="contact_heading">Get in Touch</h2>
+          <p data-content="contact_text">
+            Planning a custom cake or a bulk order? Drop by the shop, call us,
+            or leave a note below.
+          </p>
+        </div>
+
+        <div class="contact-layout">
+          <div class="panel contact-details">
+            <h3 data-content="bakery_name">SweetCrumbs Bakery</h3>
+            <dl class="contact-list">
+              <div class="contact-row">
+                <dt>Email</dt>
+                <dd><a href="mailto:hello@sweetcrumbs.example" id="contactEmailLink">hello@sweetcrumbs.example</a></dd>
+              </div>
+              <div class="contact-row">
+                <dt>Phone</dt>
+                <dd><a href="tel:+919876543210" id="contactPhoneLink">+91 98765 43210</a></dd>
+              </div>
+              <div class="contact-row">
+                <dt>Address</dt>
+                <dd data-content="contact_address">12, Bakery Street, Chennai, Tamil Nadu</dd>
+              </div>
+              <div class="contact-row">
+                <dt>Opening Hours</dt>
+                <dd data-content="contact_hours">Monday to Saturday, 9:00 AM to 8:00 PM</dd>
+              </div>
+            </dl>
+          </div>
+
+          <form id="contactForm" class="panel contact-form" novalidate>
+            <div class="field">
+              <label for="contactName">Name</label>
+              <input type="text" id="contactName" name="contactName"
+                     placeholder="Your name" autocomplete="name">
+              <p class="field-error" id="contactNameError" role="alert"></p>
+            </div>
+
+            <div class="field">
+              <label for="contactEmail">Email</label>
+              <input type="email" id="contactEmail" name="contactEmail"
+                     placeholder="you@example.com" autocomplete="email">
+              <p class="field-error" id="contactEmailError" role="alert"></p>
+            </div>
+
+            <div class="field">
+              <label for="contactMessage">Message</label>
+              <textarea id="contactMessage" name="contactMessage" rows="4"
+                        placeholder="Tell us what you need &mdash; flavours, date, number of guests..."></textarea>
+              <p class="field-error" id="contactMessageError" role="alert"></p>
+            </div>
+
+            <button type="submit" id="sendMessageBtn">Send Message</button>
+            <p class="field-error form-error" id="contactFormError" role="alert"></p>
+
+            <div class="contact-status" aria-live="polite">
+              <p class="confirm-message" id="contactConfirm" hidden></p>
+            </div>
+
+            <p class="form-note" data-content="contact_note">
+              We read every message at the bakery and usually reply within a day.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p data-content="footer_text">SweetCrumbs Bakery &copy; 2026. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
